@@ -1,0 +1,122 @@
+@startuml
+
+class User
+
+package "Parcival" {
+
+
+
+package "Preparation Context" {
+    class Conformer <<entity>>{
+        mol_with_structure: rdchem.RWMol
+        to_sdf(): str
+    }
+    class Conformers <<first class collection>>{
+        conformer_list: List[Conformer]
+        to_sdf(): str
+    }
+    class Molecule <<entity>>{
+        mol: rdchem.RWMol
+        title: str
+        generate_conformers(self, num_confs:int, prune_rms_thresh:int): Conformers
+    }
+    class MoleculeFactory <<factory>> {
+        create_molecule_from_smiles(smiles: Smiles, title: str): Molecule
+    }
+
+    package "Value Object " {
+        class Smiles <<value object>>{
+            Value: str
+        }
+    }
+
+    package "Service" {
+        class InputGenerator <<service>>{
+            {static} generate_gjf_directory(smiles: Smiles, directory_name:str): None
+            {static} generate_gjf(conformer: Conformer): str
+        }
+    }
+
+
+    Conformers "1" o-- "*" Conformer
+    MoleculeFactory --> Molecule
+    Molecule -> Conformers
+    MoleculeFactory --> Smiles
+    User --> MoleculeFactory
+    User --> InputGenerator
+    User --> Smiles
+}
+
+
+package "Analysis Context" {
+
+package "Table Aggregate"{
+
+class Table <<aggregate root>>{
+    entries: EntryRepository
+}
+
+}
+
+class EntryRepository <<repository, factory>>{
+    entries: List[Entry]
+}
+
+package "Entry Aggregate"{
+    class Entry <<aggregate root>>{
+        conformers: Conformers
+        directory_path: str
+    }
+
+    class "Conformer " <<entity>>{
+        mol_with_structure: rdchem.RWMol
+        electronic_structure: ElectronicStructure
+    }
+
+    class "Conformers " <<first class collection>>{
+        conformer_list: List[Conformer]
+    }
+
+}
+
+package "Value Object" {
+
+class MolecularOrbital <<value object>>{
+    energy: Energy
+    occupied: bool
+}
+
+class MolecularOrbitals <<first class collection>>{
+    molecular_orbitals: List[MolecularOrbital]
+}
+
+class ElectronicStructure <<value object>>{
+    program: str
+    basis: str
+    method: str
+    energy: Energy
+    molecular_orbitals: MolecularOrbitals
+}
+
+class Energy <<value object>>{
+    hartree_energy: float
+
+}
+
+
+Table "1" -> "*" EntryRepository
+EntryRepository "1" o-- "*" Entry
+Entry  ->  "Conformers "
+"Conformers " "1" o-- "*" "Conformer "
+"Conformer " -> ElectronicStructure
+ElectronicStructure --> MolecularOrbitals
+ElectronicStructure --> Energy
+MolecularOrbitals --> MolecularOrbital
+MolecularOrbital --> Energy
+}
+
+}
+User --> Table
+User --> EntryRepository
+
+@enduml
