@@ -1,5 +1,5 @@
 from unittest import TestCase
-from percival.preparation.domain.value_objects import Smiles
+from percival.preparation.value_object.input import Smiles
 from percival.preparation.domain.molecule import MoleculeFactory, Molecule
 from percival.preparation.service.input_generator import InputGenerator
 

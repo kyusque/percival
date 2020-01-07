@@ -2,7 +2,7 @@ from rdkit.Chem import rdchem, AllChem
 from rdkit import Chem
 
 from .conformer import Conformer, Conformers
-from .value_objects import Smiles
+from percival.preparation.value_object.input import Smiles
 
 
 class Molecule:

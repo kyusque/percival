@@ -2,9 +2,9 @@ import pybel
 import re
 import tempfile
 import os
-from ..domain.conformer import Conformer, Conformers
+from ..domain.conformer import Conformer
 from ..domain.molecule import Molecule, MoleculeFactory
-from ..domain.value_objects import Smiles
+from percival.preparation.value_object.input import Smiles
 
 class InputGenerator:
     @staticmethod
