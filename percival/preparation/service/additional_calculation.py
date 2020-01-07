@@ -1,4 +1,4 @@
-from .value_objects import GaussianLog, CalculationMethod
+from percival.additional_calculation.domain.value_objects import GaussianLog, CalculationMethod
 import os
 import re
 

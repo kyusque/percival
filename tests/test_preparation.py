@@ -5,7 +5,6 @@ from percival.preparation.service.input_generator import InputGenerator
 
 import unittest
 
-
 class PreparationTest(unittest.TestCase):
     """Basic test cases."""
 
