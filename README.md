@@ -41,7 +41,7 @@ gjfの内容はHF/hf/3-21g最適化の後、B3LYP/6-31g(d)で再最適化。
 
 ```python
 from percival.preparation.service.input_generator import InputGenerator
-from percival.preparation.value_object.input import Smiles
+from percival.preparation.value_object.molecule_input import Smiles
 
 dictionary = {"entry1": "CC", "entry2": "CCC", "entry3": "O"}
 for key, value in dictionary.items():

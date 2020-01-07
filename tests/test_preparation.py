@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from percival.preparation.value_object.input import Smiles
+from percival.preparation.value_object.molecule_input import Smiles
 from percival.preparation.domain.molecule import MoleculeFactory, Molecule
 from percival.preparation.service.input_generator import InputGenerator
 

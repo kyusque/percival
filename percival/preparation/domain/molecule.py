@@ -2,7 +2,7 @@ from rdkit.Chem import rdchem, AllChem
 from rdkit import Chem
 
 from .conformer import Conformer, Conformers
-from percival.preparation.value_object.input import Smiles
+from percival.preparation.value_object.molecule_input import MoleculeInput
 
 
 class Molecule:
@@ -38,7 +38,5 @@ class Molecule:
 
 
 class MoleculeFactory:
-    def create_molecule_from_smiles(smiles: Smiles, title = "no title") -> Molecule:
-        mol: rdchem.RWMol = Chem.MolFromSmiles(smiles.value)
-        mol = Chem.AddHs(mol)
-        return Molecule(mol, title)
+    def create_molecule(input: MoleculeInput, title ="no title") -> Molecule:
+        return Molecule(input.generate_mol(), title)
