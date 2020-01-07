@@ -6,9 +6,10 @@ from ..domain.conformer import Conformer
 from ..domain.molecule import Molecule, MoleculeFactory
 from percival.preparation.value_object.molecule_input import Smiles
 
+
 class InputGenerator:
     @staticmethod
-    def generate_gjf_directory(smiles: Smiles, directory_name:str) -> None:
+    def generate_gjf_directory(smiles: Smiles, directory_name: str) -> None:
         os.makedirs(directory_name, exist_ok=True)
 
         molecule: Molecule = MoleculeFactory.create_molecule(smiles, directory_name)
@@ -17,7 +18,6 @@ class InputGenerator:
             with open('{}/conf{}.gjf'.format(directory_name, i), 'w') as outfile:
                 outfile.write(InputGenerator.generate_gjf(conformer, 'conf{}.gjf'))
                 outfile.close()
-
 
     @staticmethod
     def generate_gjf(conformer: Conformer, chk_filename: str) -> str:

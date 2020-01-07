@@ -4,7 +4,8 @@
 ## 使い方
 
 ```python
-from percival.preparation.service.additional_calculation import AdditionalCalculation, AdditionalCalculationDirectory
+from percival.preparation.service.additional_calculation import AdditionalCalculation
+from percival.preparation.repository.additional_calculation import AdditionalCalculationDirectory
 from percival.additional_calculation.domain.value_objects import CalculationMethod, GaussianLog
 
 
