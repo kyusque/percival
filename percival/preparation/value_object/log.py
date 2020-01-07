@@ -1,6 +1,7 @@
-from typing import List
-import tempfile
 import os
+import tempfile
+from typing import List
+
 import pybel
 
 
@@ -45,15 +46,3 @@ class GaussianLog:
                 chunks[i].append(line)
 
         return GaussianLog(path, chunks.pop(0), chunks)
-
-
-class CalculationMethod:
-    __level: str
-
-    def __init__(self, level: str):
-        self.__level = level
-
-    @property
-    def level(self):
-        return self.__level
-
