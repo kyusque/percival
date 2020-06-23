@@ -13,7 +13,7 @@ with open('LICENSE') as f:
 
 setup(
     name='percival',
-    version='0.1.1',
+    version='0.1.11',
     description='input generator for quantum chemical calculation',
     long_description=readme,
     author='Yusuke Kawashima',
