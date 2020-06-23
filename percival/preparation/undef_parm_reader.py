@@ -1,4 +1,4 @@
-from ..domain.mm_parm_reader import ParmReader, VDW, Bend, Stretch
+from percival.preparation.domain.mm_parm_reader import ParmReader, VDW, Bend, Stretch
 import argparse
 import os
 import re
