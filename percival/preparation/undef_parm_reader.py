@@ -1,6 +1,7 @@
 from percival.preparation.domain.mm_parm_reader import ParmReader
 import argparse
-import os
+from importlib.resources import path
+from . import src
 import re
 
 
@@ -50,7 +51,8 @@ class UndefParmReader:
 
 
 if __name__ == '__main__':
-    data = dict([i for i in ParmReader(os.path.dirname(__file__) + "/src/gaff.dat")])
+    with path(src, "gaff2.dat") as file:
+        data = dict([i for i in ParmReader(file)])
     p = argparse.ArgumentParser()
     p.add_argument("path")
     p.add_argument("--prefix")
