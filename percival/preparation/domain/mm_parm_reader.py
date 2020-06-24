@@ -1,7 +1,7 @@
 import abc
-import os
 import re
-
+from importlib.resources import path
+from .. import src
 
 class MM_param(metaclass=abc.ABCMeta):
     @abc.abstractmethod
@@ -18,8 +18,9 @@ class VDW(MM_param):
         self.radius = radius
         self.well_depth = well_depth
 
-    def print(self, prefix):
-        return f"VDW {self.atom} {self.radius} {self.well_depth}"
+    def print(self, prefix=""):
+        atom = prefix + self.atom
+        return f"VDW {atom} {self.radius} {self.well_depth}"
 
     def id(self):
         return self.atom
@@ -33,8 +34,10 @@ class Stretch(MM_param):
         self.length = length
         self.atom1, self.atom2 = sorted([self.atom1, self.atom2])
 
-    def print(self, prefix):
-        return f"HrmStr1 {self.atom1} {self.atom2} {self.force_constant} {self.length}"
+    def print(self, prefix=""):
+        atom1 = prefix + self.atom1
+        atom2 = prefix + self.atom2
+        return f"HrmStr1 {atom1} {atom2} {self.force_constant} {self.length}"
 
     def id(self):
         return f"{self.atom1}-{self.atom2}"
@@ -51,8 +54,11 @@ class Bend(MM_param):
         atoms = atoms if atoms[0] <= atoms[2] else list(reversed(atoms))
         self.atom1, self.atom2, self.atom3 = atoms
 
-    def print(self, prefix):
-        return f"HrmBnd1 {self.atom1} {self.atom2} {self.atom3} {self.force_constant} {self.angle}"
+    def print(self, prefix=""):
+        atom1 = prefix + self.atom1
+        atom2 = prefix + self.atom2
+        atom3 = prefix + self.atom3
+        return f"HrmBnd1 {atom1} {atom2} {atom3} {self.force_constant} {self.angle}"
 
     def id(self):
         return f"{self.atom1}-{self.atom2}-{self.atom3}"
@@ -94,5 +100,6 @@ class ParmReader:
 
 
 if __name__ == '__main__':
-    for i in ParmReader(os.path.dirname(__file__) + "/../src/gaff2.dat"):
-        print(i)
+    with path(src, "gaff.dat") as f:
+        for k, v in ParmReader(f):
+            print(f'{k}:{v.print("test")}')
