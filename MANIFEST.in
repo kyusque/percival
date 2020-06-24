@@ -1,1 +1,3 @@
 include LICENSE
+include percival/preparation/src/gaff.dat
+include percival/preparation/src/gaff2.dat
